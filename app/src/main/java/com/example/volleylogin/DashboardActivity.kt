@@ -3,6 +3,7 @@ package com.example.volleylogin
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
@@ -35,15 +36,14 @@ class DashboardActivity : AppCompatActivity() {
             //productArrayList.clear()
             productAdapter.notifyDataSetChanged()
 
+            binding.pbProduct.visibility = View.INVISIBLE
             binding.rvProduct.adapter = productAdapter
             binding.rvProduct.layoutManager = LinearLayoutManager(this)
-
         }
-
-        //getProduct()
     }
 
     private fun initialization() {
+        binding.pbProduct.visibility = View.VISIBLE
         viewModel = ViewModelProvider(this)[ProductViewModel::class.java]
     }
 }

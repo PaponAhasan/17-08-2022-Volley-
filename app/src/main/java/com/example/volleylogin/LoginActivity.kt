@@ -13,6 +13,7 @@ import com.android.volley.toolbox.StringRequest
 import com.example.volleylogin.api.Api
 import com.example.volleylogin.databinding.ActivityLoginBinding
 import com.example.volleylogin.viewmodel.ProductViewModel
+import com.example.volleylogin.viewmodel.UserViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -20,7 +21,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private var token: String? = null
 
-    private lateinit var viewModel: ProductViewModel
+    private lateinit var viewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,15 +32,29 @@ class LoginActivity : AppCompatActivity() {
         initialization()
 
         binding.btnLogin.setOnClickListener {
+
             val email = binding.etEmail.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
 
-            binding.progressBar.visibility = View.VISIBLE
+            if(email.isEmpty() or password.isEmpty()){
+                Toast.makeText(this, "needed email or password", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
 
+            showProgress()
+            binding.btnLogin.isEnabled = false
             //call for user auth
             viewModel.getAuth(email, password)
             viewModel.userTokenResponse.observe(this) {
                 val token = it
+
+                if(token.isEmpty()) {
+                    hideProgress()
+                    binding.btnLogin.isEnabled = true
+                    Toast.makeText(this, "Invalid User", Toast.LENGTH_LONG).show()
+                    return@observe
+                }
+
                 viewModel.getLogin(token, email, password)
                 viewModel.userInfoResponse.observe(this) { user ->
 
@@ -57,7 +72,7 @@ class LoginActivity : AppCompatActivity() {
                         val editor = sharedPref.edit()
 
                         editor.apply {
-                            editor.putString(Api.TOKEN, token)
+                            putString(Api.TOKEN, token)
                             putString(Api.ID, userId)
                             putString(Api.EMAIL, userEmail)
                             putString(Api.PASSWORD, userPassword)
@@ -66,31 +81,28 @@ class LoginActivity : AppCompatActivity() {
                             putString(Api.AVATAR, avatar)
                             apply()
                         }
+
                         val intent = Intent(this, DashboardActivity::class.java)
                         startActivity(intent)
                     } else {
-                        binding.progressBar.visibility = View.INVISIBLE
+                        hideProgress()
+                        binding.btnLogin.isEnabled = true
                         Toast.makeText(this, "Invalid User", Toast.LENGTH_LONG).show()
                     }
                 }
             }
-            //getAuth(email, password)
         }
-
-        binding.progressBar.visibility = View.GONE
     }
 
     private fun initialization() {
-        viewModel = ViewModelProvider(this)[ProductViewModel::class.java]
+        viewModel = ViewModelProvider(this)[UserViewModel::class.java]
     }
 
-    override fun onStart() {
-        super.onStart()
-        binding.progressBar.visibility = View.GONE
+    private fun showProgress() {
+        binding.progressBar.visibility = View.VISIBLE
     }
 
-    override fun onPause() {
-        binding.progressBar.visibility = View.GONE
-        super.onPause()
+    private fun hideProgress() {
+        binding.progressBar.visibility = View.INVISIBLE
     }
 }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".LoginActivity">
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -37,9 +38,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="40dp"
+        android:background="@drawable/cardview_bg"
         android:hint="enter email"
         android:inputType="textEmailAddress"
+        android:minHeight="50dp"
+        android:paddingStart="5dp"
         app:layout_constraintEnd_toEndOf="@+id/tv_email"
         app:layout_constraintStart_toStartOf="@+id/tv_email"
         app:layout_constraintTop_toBottomOf="@+id/tv_email" />
@@ -61,21 +66,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="40dp"
         android:autofillHints=""
+        android:background="@drawable/cardview_bg"
         android:ems="10"
-        android:hint="enter password"
+        android:hint=" enter password"
         android:inputType="textPassword"
+        android:minHeight="50dp"
+        android:paddingStart="5dp"
         app:layout_constraintEnd_toEndOf="@+id/tv_password"
         app:layout_constraintStart_toStartOf="@+id/tv_password"
-        app:layout_constraintTop_toBottomOf="@+id/tv_password" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_password"
+        app:passwordToggleEnabled="true" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="40dp"
-        android:background="#0BA611"
+        android:background="@drawable/cardview_bg_btn"
         android:text="Log in"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/et_password"
@@ -98,10 +108,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-         />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,9 +14,9 @@ import com.example.volleylogin.model.Product
 class ProductAdapter(private val context : Context, private val products : List<Product>) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     inner class ProductViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
-        val productIV = itemView.findViewById<ImageView>(R.id.iv_product)
-        val titleTV = itemView.findViewById<TextView>(R.id.tv_title)
-        val priceTV = itemView.findViewById<TextView>(R.id.tvPrice)
+        val productIV: ImageView = itemView.findViewById(R.id.iv_product)
+        val titleTV: TextView = itemView.findViewById(R.id.tv_title)
+        val priceTV: TextView = itemView.findViewById(R.id.tvPrice)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
